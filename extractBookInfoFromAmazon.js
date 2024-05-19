@@ -64,20 +64,4 @@ const lines = `---\ntitle: ${title} \nauthor: [${authors.join(
   "\n"
 )}${mdimage}\n${selection}\n\n----\n`;
 
-document.getElementById(
-  "bookDescription_feature_div"
-).innerHTML = `<textarea style="height:500px">${lines}</textarea>`;
-
-// コピーの元にするtextareaを作成
-const textarea = document.createElement("textarea");
-textarea.textContent = lines;
-
-// bodyタグの最後にtextareaを追加
-document.body.appendChild(textarea);
-
-// textareaの内容をクリップボードにコピー
-textarea.select();
-document.execCommand("copy");
-
-// 最初に作成したtextareaをbodyから削除
-document.body.removeChild(textarea);
+setTimeout(() => navigator.clipboard.writeText(lines), 100);
