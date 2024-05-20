@@ -43,8 +43,6 @@ const selection = isSelection
 // const ebooksImgBlkFront = document.getElementById("ebooksImgBlkFront");
 //   const imageurl = imgBlkFront ? imgBlkFront.getAttribute("src") : ebooksImgBlkFront.getAttribute("src");
 const imageurl = document.getElementById("landingImage").getAttribute("src");
-// update at 2023/11/17
-const mdimage = `\n![|100](${imageurl})\n`;
 
 // 著者情報の取得
 const authors = [];
@@ -53,15 +51,38 @@ document.querySelectorAll(".author").forEach((c) => {
   var at = c.innerText.replace(/\r?\n/g, "").replace(/,/, "");
   var pu = at.match(/\(.+\)/);
   var ct = at.replace(/\(.+\)/, "").replace(/ /g, "");
-  viewAuthors.push(`[[${ct}]]${pu}`);
   authors.push(ct);
 });
 
 // 表示する内容
-const lines = `---\ntitle: ${title} \nauthor: [${authors.join(
-  ","
-)}]\nasin: ${asin}\npublish_date: ${publish_date}\ncategory: \n---\n# ${link}\n${viewAuthors.join(
-  "\n"
-)}${mdimage}\n${selection}\n\n----\n`;
+const lines = `---
+author: [${authors.join(",")}]
+aliases:
+    - ${title}
+---
+
+%% [テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する %%
+
+![book cover](${imageurl})
+
+# ${title}
+%%
+読書メモのチェックリスト
+- [ ] ファイル名をISBNに設定する
+- [x] タイトルをエイリアスに設定する
+- [x] Amazonのリンクを貼る(できればリッチリンクとして)
+- [x] 書影を貼る
+- [ ] 著者をリンクする
+- [ ] 出版社をリンクする
+%%
+
+- 著者: ${authors.map((author) => `[[${author}]]`).join(",")}
+- 出版社:
+- 出版日: ${publish_date}
+- ISBN:
+- リンク: ${url}
+
+## 読書メモ
+`;
 
 setTimeout(() => navigator.clipboard.writeText(lines), 100);
