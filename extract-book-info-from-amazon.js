@@ -1,61 +1,92 @@
-// ref. https://scrapbox.io/obsidian/Get_book_information_from_Amazon
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(value);
+  } catch (error) {
+    console.warn("Failed to copy: ", error);
+    console.warn("A deprecated alternative was executed.");
+    const dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = text;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+  }
+};
 
-// 書籍名の取得
-const productTitle = document.getElementById("productTitle");
-const ebooksProductTitle = document.getElementById("ebooksProductTitle");
-const title = productTitle
-  ? productTitle.innerText.trim()
-  : ebooksProductTitle.innerText.trim();
+(async () => {
+  // 書籍名の取得
+  const productTitle = document.getElementById("productTitle");
+  const ebooksProductTitle = document.getElementById("ebooksProductTitle");
+  const title = productTitle
+    ? productTitle.innerText.trim()
+    : ebooksProductTitle.innerText.trim();
 
-// ASIN の取得
-const asinId = document.getElementById("ASIN");
-const asin = asinId
-  ? asinId.value
-  : document.getElementsByName("ASIN.0")[0].value;
+  // ASIN の取得
+  const asinId = document.getElementById("ASIN");
+  const asin = asinId
+    ? asinId.value
+    : document.getElementsByName("ASIN.0")[0].value;
 
-//登録情報欄を取得
-let detail = document.getElementById("detailBullets_feature_div");
-if (!detail) {
-  const subdoc = document.getElementById("product-description-iframe")
-    .contentWindow.document;
-  detail = subdoc.getElementById("detailBullets_feature_div");
-}
+  // 書影の取得
+  const imageurl = document.getElementById("landingImage").getAttribute("src");
 
-// 出版関係の情報を取得 (ここでは出版日付だけ)
-const pubdata = detail.innerText.split(/\n/);
-const publish_date = pubdata[2].slice(10); //出版日付
+  // 著者情報の取得
+  const authors = [...document.querySelectorAll(".author")].map((c) => {
+    return c.innerText
+      .replace(/\r?\n/g, "")
+      .replace(/,/, "")
+      .replace(/\(.+\)/, "")
+      .replace(/ /g, "");
+  });
 
-// 書籍のタイトルとリンク貼り
+  //登録情報欄を取得
+  let detail = document.getElementById("detailBullets_feature_div");
+  if (!detail) {
+    const subdoc = document.getElementById("product-description-iframe")
+      .contentWindow.document;
+    detail = subdoc.getElementById("detailBullets_feature_div");
+  }
 
-const url = `https://amazon.jp/dp/${asin}`;
-const link = `[${title}](${url})`;
+  // 出版社情報の取得->以降の情報取得に使う
+  const publisher =
+    document.querySelector(
+      "#rpi-attribute-book_details-publisher > div.a-section.a-spacing-none.a-text-center.rpi-attribute-value > span"
+    )?.innerText ??
+    detail.innerText
+      .split("\n")
+      .find((t) => t.startsWith("出版社"))
+      .match(/:[\s\t　]*(.+)[\s\t　]*\(.+\)/)[1]
+      .trim();
 
-// 選択範囲を取得する
-const isSelection = window.getSelection().toString();
-const selection = isSelection
-  ? `> [!quote] ${title}\n> ${isSelection
-      .replace(/(\W+)( )(\W+)/g, "$1$3")
-      .replace(/\n/g, "\n> ")}`
-  : "";
+  // 出版日の取得
+  const publish_date =
+    document.querySelector(
+      "#rpi-attribute-book_details-publication_date > div.a-section.a-spacing-none.a-text-center.rpi-attribute-value > span"
+    ).innerText ??
+    detail.innerText
+      .split("\n")
+      .find((t) => t.startsWith("発売日"))
+      ?.match(/:[\s\t　]*(.+)/)[1]
+      ?.trim();
 
-// 書影の取得
-// const imgBlkFront = document.getElementById("imgBlkFront");
-// const ebooksImgBlkFront = document.getElementById("ebooksImgBlkFront");
-//   const imageurl = imgBlkFront ? imgBlkFront.getAttribute("src") : ebooksImgBlkFront.getAttribute("src");
-const imageurl = document.getElementById("landingImage").getAttribute("src");
+  // ISBN の取得
+  const isbn =
+    document.querySelector(
+      "#rpi-attribute-book_details-isbn10 > div.a-section.a-spacing-none.a-text-center.rpi-attribute-value > span"
+    )?.innerText ??
+    detail.innerText
+      .split("\n")
+      .find((t) => t.startsWith("ISBN-10"))
+      ?.match(/:[\s\t　]*(.+)/)[1]
+      ?.trim() ??
+    detail.innerText
+      .split("\n")
+      .find((t) => t.startsWith("ISBN-13"))
+      ?.match(/:[\s\t　]*(.+)/)[1]
+      ?.trim();
 
-// 著者情報の取得
-const authors = [];
-const viewAuthors = [];
-document.querySelectorAll(".author").forEach((c) => {
-  var at = c.innerText.replace(/\r?\n/g, "").replace(/,/, "");
-  var pu = at.match(/\(.+\)/);
-  var ct = at.replace(/\(.+\)/, "").replace(/ /g, "");
-  authors.push(ct);
-});
-
-// 表示する内容
-const lines = `---
+  // 表示する内容
+  const lines = `---
 author: [${authors.join(",")}]
 aliases:
     - ${title}
@@ -68,21 +99,26 @@ aliases:
 # ${title}
 %%
 読書メモのチェックリスト
-- [ ] ファイル名をISBNに設定する
 - [x] タイトルをエイリアスに設定する
 - [x] Amazonのリンクを貼る(できればリッチリンクとして)
 - [x] 書影を貼る
+- [ ] ファイル名をISBNに設定する
 - [ ] 著者をリンクする
 - [ ] 出版社をリンクする
 %%
 
 - 著者: ${authors.map((author) => `[[${author}]]`).join(",")}
-- 出版社:
+- 出版社: [[${publisher}]]
 - 出版日: ${publish_date}
-- ISBN:
-- リンク: ${url}
+- ISBN: ${isbn}
+- リンク: https://amazon.jp/dp/${asin}
 
 ## 読書メモ
 `;
 
-setTimeout(() => navigator.clipboard.writeText(lines), 100);
+  document.getElementById(
+    "bookDescription_feature_div"
+  ).innerHTML = `<textarea style="height:500px">${lines}</textarea>`;
+
+  await copyToClipboard(lines);
+})();
