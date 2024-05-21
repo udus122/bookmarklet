@@ -112,4 +112,5 @@ function copyToClipboard(text) {
   document.execCommand("copy");
   document.body.removeChild(dummy);
 }
-copyToClipboard(isbn);
+
+copyToClipboard(`${isbn}|${title}`);
