@@ -116,9 +116,11 @@ aliases:
 ## 読書メモ
 `;
 
-  document.getElementById(
-    "bookDescription_feature_div"
-  ).innerHTML = `<textarea style="height:500px">${lines}</textarea>`;
-
   await copyToClipboard(lines);
+
+  await new Promise(() => {
+    document.getElementById(
+      "bookDescription_feature_div"
+    ).innerHTML = `<textarea style="height:500px">${lines}</textarea>`;
+  });
 })();
