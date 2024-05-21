@@ -104,9 +104,12 @@ document.getElementById(
   "bookDescription_feature_div"
 ).innerHTML = `<textarea style="height:500px">${lines}</textarea>`;
 
-const dummy = document.createElement("textarea");
-document.body.appendChild(dummy);
-dummy.value = text;
-dummy.select();
-document.execCommand("copy");
-document.body.removeChild(dummy);
+function copyToClipboard(text) {
+  const dummy = document.createElement("textarea");
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand("copy");
+  document.body.removeChild(dummy);
+}
+copyToClipboard(isbn);
