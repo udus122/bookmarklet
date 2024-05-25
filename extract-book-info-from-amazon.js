@@ -39,7 +39,6 @@ function getASIN() {
   }
 }
 const asin = getASIN();
-console.log(asin);
 
 // 書影の取得
 function getImageUrl() {
@@ -120,8 +119,8 @@ const publisher =
   )?.innerText ??
   detailsList
     .find((t) => t.startsWith("出版社"))
-    .match(/:[\s\t　]*(.+)[\s\t　]*\(.+\)/)[1]
-    .trim();
+    ?.match(/:[\s\t　]*(.+)[\s\t　]*\(.+\)/)[1]
+    ?.trim();
 
 // 出版日の取得
 const publish_date =
@@ -170,9 +169,9 @@ aliases:
 %%
 
 - 著者: ${authors.map((author) => `[[${author}]]`).join(",")}
-- 出版社: [[${publisher}]]
-- 出版日: ${publish_date}
-- ISBN: ${isbn}
+- 出版社: ${publisher ? `[[${publisher}]]` : ""}
+- 出版日: ${publish_date ? `[[${publish_date}]]` : ""}
+- ISBN: ${isbn ? `[[${isbn}]]` : ""}
 - リンク: https://amazon.jp/dp/${asin}
 
 ## 読書メモ
@@ -196,4 +195,4 @@ function copyToClipboard(text) {
   document.body.removeChild(dummy);
 }
 
-copyToClipboard(`${isbn}|${title}`);
+copyToClipboard(`[[${isbn}|${title}]]`);
