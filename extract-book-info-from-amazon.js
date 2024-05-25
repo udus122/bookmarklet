@@ -195,4 +195,4 @@ function copyToClipboard(text) {
   document.body.removeChild(dummy);
 }
 
-copyToClipboard(`[[${isbn}|${title}]]`);
+copyToClipboard(`[[${isbn ?? asin}|${title}]]`);
