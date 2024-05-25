@@ -183,6 +183,7 @@ insertElement.innerHTML = `<textarea style="height:500px;border-width:0.5rem;bor
 const insertArea =
   document.getElementById("bookDescription_feature_div") ??
   document.getElementById("image-block") ??
+  document.getElementById("ppd") ??
   document.body;
 insertArea.prepend(insertElement);
 
