@@ -163,6 +163,8 @@ url: https://amazon.jp/dp/${asin}
 [テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する
 %%
 
+![cover](${coverUrl})
+
 # ${title}
 
 %%本の要約はここに書く%%
