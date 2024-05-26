@@ -169,7 +169,9 @@ url: https://amazon.jp/dp/${asin}
 
 %%本の要約はここに書く%%
 
-- [ ] 章ノートを作成する
+## XXX 章
+
+%%章の要約はここに書く%%
 `;
 
 const insertElement = document.createElement("div");
