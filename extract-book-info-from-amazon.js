@@ -59,7 +59,7 @@ function getImageUrl() {
   }
 }
 
-const imageurl = getImageUrl();
+const coverUrl = getImageUrl();
 
 // 著者情報の取得
 function getAuthors() {
@@ -146,35 +146,28 @@ const isbn =
     ?.match(/:[\s\t　]*(.+)/)[1]
     ?.trim();
 
+const linkLine = `[[${isbn ?? asin}|${title}]]`;
 // 表示する内容
 const lines = `---
-author: [${authors.join(",")}]
 aliases:
     - ${title}
+authors: [${authors.map((author) => `[[${author}]]`).join(",")}]
+cover: ${coverUrl}
+isbn: ${isbn ? `[[${isbn}]]` : ""}
+publisher: ${publisher ? `[[${publisher.replace("/", "-")}]]` : ""}
+publish_date: ${publish_date ? `[[${publish_date}]]` : ""}
+url: https://amazon.jp/dp/${asin}
 ---
 
-%% [テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する %%
-
-![book cover](${imageurl})
+%%
+[テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する
+%%
 
 # ${title}
-%%
-読書メモのチェックリスト
-- [x] タイトルをエイリアスに設定する
-- [x] Amazonのリンクを貼る(できればリッチリンクとして)
-- [x] 書影を貼る
-- [ ] ファイル名をISBNに設定する
-- [ ] 著者をリンクする
-- [ ] 出版社をリンクする
-%%
 
-- 著者: ${authors.map((author) => `[[${author}]]`).join(",")}
-- 出版社: ${publisher ? `[[${publisher}]]` : ""}
-- 出版日: ${publish_date ? `[[${publish_date}]]` : ""}
-- ISBN: ${isbn ? `[[${isbn}]]` : ""}
-- リンク: https://amazon.jp/dp/${asin}
+%%本の要約はここに書く%%
 
-## 読書メモ
+- [ ] 章ノートを作成する
 `;
 
 const insertElement = document.createElement("div");
@@ -196,4 +189,4 @@ function copyToClipboard(text) {
   document.body.removeChild(dummy);
 }
 
-copyToClipboard(`[[${isbn ?? asin}|${title}]]`);
+copyToClipboard(linkLine);
