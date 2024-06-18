@@ -8,7 +8,7 @@
 const asin = getASIN();
 const shortenUrl = `http://amazon.jp/dp/${asin}`;
 copyToClipboard(shortenUrl);
-location.href = shortenUrl;
+location.replace(shortenUrl);
 
 function getASIN() {
   const ASINIdEl = document.getElementById("ASIN");
