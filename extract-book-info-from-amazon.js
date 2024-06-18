@@ -155,7 +155,7 @@ authors: [${authors.map((author) => `[[${author}]]`).join(",")}]
 cover: ${coverUrl}
 isbn: ${isbn ? `[[${isbn}]]` : ""}
 publisher: ${publisher ? `[[${publisher.replace("/", "-")}]]` : ""}
-publish_date: ${publish_date ? `[[${publish_date}]]` : ""}
+publish_date: ${publish_date ? `${publish_date}` : ""}
 url: https://amazon.jp/dp/${asin}
 ---
 
@@ -163,7 +163,7 @@ url: https://amazon.jp/dp/${asin}
 [テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する
 %%
 
-![cover](${coverUrl})
+![cover|100](${coverUrl})
 
 # ${title}
 
