@@ -151,10 +151,10 @@ const linkLine = `[[${isbn ?? asin}|${title}]]`;
 const lines = `---
 aliases:
     - ${title}
-authors: [${authors.map((author) => `[[${author}]]`).join(",")}]
+authors: [${authors.map((author) => `"[[${author}]]"`).join(",")}]
 cover: ${coverUrl}
 isbn: ${isbn ? `[[${isbn}]]` : ""}
-publisher: ${publisher ? `[[${publisher.replace("/", "-")}]]` : ""}
+publisher: ${publisher ? `"[[${publisher.replace("/", "-")}]]"` : ""}
 publish_date: ${publish_date ? `${publish_date}` : ""}
 url: https://amazon.jp/dp/${asin}
 ---
