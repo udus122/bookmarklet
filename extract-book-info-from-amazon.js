@@ -164,16 +164,19 @@ tags: ["literature/book"]
 
 ![cover|100](${coverUrl})
 
+%%
 # 気になっている・知りたいこと
 
 # 要約
+%%
 
 # 目次
 
-- XXX 章
-    - %%章の要約はここに書く%%
+## XXX 章
 
+%%
 # 学び・アクション
+%%
 `;
 
 const insertElement = document.createElement("div");
