@@ -157,7 +157,8 @@ authors: [${authors.map((author) => `"[[${author}]]"`).join(",")}]
 cover: ${coverUrl}
 isbn: ${isbn ? `[[${isbn}]]` : ""}
 publisher: ${publisher ? `"[[${publisher.replace("/", "-")}]]"` : ""}
-publish_date: ${publish_date ? `${publish_date}` : ""}
+publish_date: A${publish_date ? `${publish_date}` : ""}
+read_at:
 status: "unread"
 url: https://amazon.jp/dp/${asin}
 ---
