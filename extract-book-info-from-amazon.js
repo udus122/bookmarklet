@@ -155,7 +155,7 @@ isbn: ${isbn ? `[[${isbn}]]` : ""}
 publisher: ${publisher ? `"[[${publisher.replace("/", "-")}]]"` : ""}
 publish_date: ${publish_date ? `${publish_date}` : ""}
 url: https://amazon.jp/dp/${asin}
-tags: ["book"]
+tags: ["literature/book"]
 ---
 
 %%
