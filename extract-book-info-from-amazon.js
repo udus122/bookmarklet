@@ -149,23 +149,31 @@ const isbn =
 const linkLine = `[[${isbn ?? asin}|${title}]]`;
 // 表示する内容
 const lines = `---
+aliases:
+cssclasses:
+permalink:
+tags: ["literature/book"]
 authors: [${authors.map((author) => `"[[${author}]]"`).join(",")}]
 cover: ${coverUrl}
 isbn: ${isbn ? `[[${isbn}]]` : ""}
 publisher: ${publisher ? `"[[${publisher.replace("/", "-")}]]"` : ""}
 publish_date: ${publish_date ? `${publish_date}` : ""}
+status: "unread"
 url: https://amazon.jp/dp/${asin}
-tags: ["literature/book"]
 ---
 
 %%
 [テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する
 %%
 
+up: [[Literatures]]
+
 ![cover|100](${coverUrl})
 
 %%
 # 気になっている・知りたいこと
+
+- 
 
 # 要約
 %%
