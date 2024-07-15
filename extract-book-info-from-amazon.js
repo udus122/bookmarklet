@@ -152,7 +152,7 @@ const lines = `---
 aliases:
 cssclasses:
 permalink:
-tags: ["literature/book"]
+tags: ["literature/book", "sr/flashcards", "sr/review"]
 authors: [${authors.map((author) => `"[[${author}]]"`).join(",")}]
 cover: ${coverUrl}
 isbn: ${isbn ? `[[${isbn}]]` : ""}
@@ -171,9 +171,8 @@ up: [[Literatures]]
 
 ![cover|100](${coverUrl})
 
-%%
-- 気になっている・知りたいこと
-    - 
+%% 気になっている・知りたいこと・キーワード
+-
 %%
 
 # メモ
