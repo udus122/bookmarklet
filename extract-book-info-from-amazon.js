@@ -153,11 +153,11 @@ aliases:
 cssclasses:
 permalink:
 tags: ["literature/book", "sr/flashcards", "sr/review"]
-authors: [${authors.map((author) => `"[[${author}]]"`).join(",")}]
+authors: [${authors.map((author) => `"${author}"`).join(",")}]
 cover: ${coverUrl}
-isbn: ${isbn ? `[[${isbn}]]` : ""}
-publisher: ${publisher ? `"[[${publisher.replace("/", "-")}]]"` : ""}
-publish_date: A${publish_date ? `${publish_date}` : ""}
+isbn: ${isbn ? `${isbn}` : ""}
+publisher: ${publisher ? `"${publisher.replace("/", "-")}"` : ""}
+publish_date: ${publish_date ? `${publish_date}` : ""}
 read_at:
 status: "unread"
 url: https://amazon.jp/dp/${asin}
@@ -175,12 +175,9 @@ up: [[Literatures]]
 -
 %%
 
-# メモ
+# XXX 章
 
-## XXX 章
-
-%%
-# 感想・学び・アクション
+%%感想・学び・アクション
 %%
 `;
 
