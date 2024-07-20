@@ -150,7 +150,7 @@ const linkLine = `[[${isbn ?? asin}|${title}]]`;
 // 表示する内容
 const lines = `---
 aliases:
-cssclasses:
+cssclasses: ["clean-embeds"]
 permalink:
 tags: ["literature/book", "sr/flashcards", "sr/review"]
 authors: [${authors.map((author) => `"${author}"`).join(",")}]
