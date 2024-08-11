@@ -163,22 +163,16 @@ status: "unread"
 url: https://amazon.jp/dp/${asin}
 ---
 
-%%
-[テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する
-%%
+%%[テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する%%
 
 up: [[Literatures]]
 
 ![cover|100](${coverUrl})
 
-%% 気になっている・知りたいこと・キーワード
--
-%%
+---
+
 
 # XXX 章
-
-%%感想・学び・アクション
-%%
 `;
 
 const insertElement = document.createElement("div");
