@@ -162,7 +162,7 @@ read_at:
 status: "unread"
 url: https://amazon.jp/dp/${asin}
 ---
-
+${title}
 %%[テンプレート](obsidian://advanced-uri?vault=notes&filepath=_templater%252Fbook.md)を編集する%%
 
 up: [[Literatures]]
