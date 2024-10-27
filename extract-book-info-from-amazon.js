@@ -171,7 +171,12 @@ up: [[Literatures]]
 
 ---
 
-# XXX 章
+# 感想
+
+# 目次メモ
+
+[[title_目次メモ]]
+
 `;
 
 const insertElement = document.createElement("div");
