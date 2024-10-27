@@ -175,7 +175,7 @@ up: [[Literatures]]
 
 # 目次メモ
 
-[[title_目次メモ]]
+[[${title}_目次メモ]]
 
 `;
 
